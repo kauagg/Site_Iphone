@@ -1,7 +1,7 @@
 {
   "name": "site-iphone",
   "version": "1.0.0",
-  "description": "Site de vendas iPhone com PIX direto",
+  "description": "Site de vendas iPhone",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
