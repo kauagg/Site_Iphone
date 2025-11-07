@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra - iPhone 15 Pro Max | Apple</title>
+  <style>
+    /* Reset e configurações gerais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #1d1d1f;
+      background-color: #f5f5f7;
+      padding: 2rem 1rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .header img {
+      height: 24px;
+      margin-bottom: 1rem;
+    }
+    
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Layout principal */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    @media (min-width: 768px) {
+      .checkout-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    /* Resumo do pedido */
+    .order-summary {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .order-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #d2d2d7;
+    }
+    
+    .product-info {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .product-image {
+      width: 80px;
+      height: 80px;
+      background-color: #f5f5f7;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .product-details h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .product-details p {
+      color: #86868b;
+      font-size: 0.9rem;
+    }
+    
+    .price-details {
+      border-top: 1px solid #d2d2d7;
+      padding-top: 1rem;
+    }
+    
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .total {
+      border-top: 1px solid #d2d2d7;
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    /* Formulário */
+    .box-checkout {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .box-checkout h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #0071e3;
+    }
+    
+    .input-error {
+      border-color: #d70015;
+    }
+    
+    .error-message {
+      color: #d70015;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    
+    .btn-primary {
+      background-color: #0071e3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0077ed;
+    }
+    
+    .btn-primary:disabled {
+      background-color: #d2d2d7;
+      cursor: not-allowed;
+    }
+    
+    /* Área PIX */
+    .hidden {
+      display: none;
+    }
+    
+    #areaPix {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #d2d2d7;
+    }
+    
+    .pix-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .pix-amount {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .qr-container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    #qr {
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      padding: 1rem;
+      background: white;
+    }
+    
+    .copy-section {
+      text-align: center;
+    }
+    
+    .copy-label {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #86868b;
+    }
+    
+    .copiaecola {
+      background-color: #f5f5f7;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-family: monospace;
+      word-break: break-all;
+      font-size: 0.8rem;
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: #0071e3;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #f5f5f7;
+    }
+    
+    .aviso {
+      background-color: #fff8e1;
+      border: 1px solid #ffd54f;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    /* Termos e condições */
+    .terms {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #86868b;
+    }
+    
+    .terms label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-weight: normal;
+    }
+    
+    .terms input {
+      width: auto;
+      margin-top: 0.2rem;
+    }
+    
+    /* Garantias */
+    .guarantees {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .guarantee-item {
+      text-align: center;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .guarantee-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .guarantee-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://www.apple.com/ac/globalnav/7/pt_BR/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_apple_image__b5er5ngrzxqq_large.svg" alt="Apple">
+      <h1>Finalizar Compra</h1>
+    </div>
+    
+    <div class="checkout-layout">
+      <!-- Resumo do Pedido -->
+      <div class="order-summary">
+        <h2 class="order-title">Resumo do Pedido</h2>
+        
+        <div class="product-info">
+          <div class="product-image">
+            <span>📱</span>
+          </div>
+          <div class="product-details">
+            <h3>iPhone 15 Pro Max</h3>
+            <p>256 GB - Azul Titânio</p>
+            <p>Quantidade: 1</p>
+          </div>
+        </div>
+        
+        <div class="price-details">
+          <div class="price-row">
+            <span>Subtotal</span>
+            <span>R$ 8.499,00</span>
+          </div>
+          <div class="price-row">
+            <span>Desconto</span>
+            <span style="color: #d70015;">- R$ 1.000,00</span>
+          </div>
+          <div class="price-row">
+            <span>Frete</span>
+            <span style="color: #34c759;">Grátis</span>
+          </div>
+          <div class="price-row total">
+            <span>Total</span>
+            <span>R$ 7.499,00</span>
+          </div>
+        </div>
+        
+        <div class="guarantees">
+          <div class="guarantee-item">
+            <div class="guarantee-icon">🔒</div>
+            <div class="guarantee-title">Compra Segura</div>
+          </div>
+          <div class="guarantee-item">
+            <div class="guarantee-icon">🚚</div>
+            <div class="guarantee-title">Entrega Rápida</div>
+          </div>
+          <div class="guarantee-item">
+            <div class="guarantee-icon">↩️</div>
+            <div class="guarantee-title">Devolução</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Formulário de Checkout -->
+      <div class="box-checkout">
+        <h2>Pagamento com PIX</h2>
+        
+        <form id="formCheckout">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+            <div class="error-message" id="nomeError">Por favor, insira seu nome completo</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required maxlength="14">
+            <div class="error-message" id="cpfError">Por favor, insira um CPF válido</div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            <div class="error-message" id="emailError">Por favor, insira um e-mail válido</div>
+          </div>
+          
+          <div class="terms">
+            <label>
+              <input type="checkbox" id="terms" required>
+              <span>Concordo com os <a href="#">termos e condições</a> e <a href="#">política de privacidade</a></span>
+            </label>
+            <div class="error-message" id="termsError">Você precisa aceitar os termos e condições</div>
+          </div>
+          
+          <button type="submit" class="btn-primary" id="submitBtn">Gerar PIX</button>
+        </form>
+        
+        <div id="areaPix" class="hidden">
+          <h3 class="pix-title">Pagamento PIX</h3>
+          <p class="pix-amount">Valor: <strong>R$ 7.499,00</strong></p>
+          
+          <div class="qr-container">
+            <canvas id="qr"></canvas>
+          </div>
+          
+          <div class="copy-section">
+            <p class="copy-label">ou copie o código PIX:</p>
+            <div class="copiaecola" id="copia">00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-42661417400052040000530398654067.495802BR5913Apple Store6008Sao Paulo62290525mpqr-1234567890ABCDEFGH6304A56F</div>
+            <button class="btn-secondary" onclick="copiarPix()">Copiar código PIX</button>
+          </div>
+          
+          <p class="aviso">⚠️ Após o pagamento, seu pedido será processado automaticamente. Você receberá uma confirmação por e-mail.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    // Formatação do CPF
+    document.getElementById('cpf').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      
+      if (value.length <= 11) {
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      }
+      
+      e.target.value = value;
+    });
+    
+    // Validação do formulário
+    document.getElementById('formCheckout').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Reset errors
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('input').forEach(el => {
+        el.classList.remove('input-error');
+      });
+      
+      let isValid = true;
+      
+      // Validação do nome
+      const nome = document.getElementById('nome').value.trim();
+      if (nome.length < 3) {
+        document.getElementById('nomeError').style.display = 'block';
+        document.getElementById('nome').classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validação do CPF
+      const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+      if (cpf.length !== 11) {
+        document.getElementById('cpfError').style.display = 'block';
+        document.getElementById('cpf').classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validação do email
+      const email = document.getElementById('email').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById('emailError').style.display = 'block';
+        document.getElementById('email').classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validação dos termos
+      if (!document.getElementById('terms').checked) {
+        document.getElementById('termsError').style.display = 'block';
+        isValid = false;
+      }
+      
+      if (isValid) {
+        // Simular processamento
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').textContent = 'Processando...';
+        
+        setTimeout(() => {
+          gerarPix();
+        }, 1500);
+      }
+    });
+    
+    // Gerar QR Code PIX
+    function gerarPix() {
+      const pixCode = "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-42661417400052040000530398654067.495802BR5913Apple Store6008Sao Paulo62290525mpqr-1234567890ABCDEFGH6304A56F";
+      
+      // Gerar QR Code
+      QRCode.toCanvas(document.getElementById('qr'), pixCode, {
+        width: 200,
+        margin: 1,
+        color: {
+          dark: '#1d1d1f',
+          light: '#ffffff'
+        }
+      }, function(error) {
+        if (error) console.error(error);
+      });
+      
+      // Mostrar área PIX
+      document.getElementById('areaPix').classList.remove('hidden');
+      document.getElementById('submitBtn').textContent = 'PIX Gerado';
+      
+      // Scroll para a área PIX
+      document.getElementById('areaPix').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Copiar código PIX
+    function copiarPix() {
+      const pixText = document.getElementById('copia').textContent;
+      
+      navigator.clipboard.writeText(pixText).then(function() {
+        const btn = document.querySelector('.btn-secondary');
+        const originalText = btn.textContent;
+        btn.textContent = 'Código copiado!';
+        btn.style.backgroundColor = '#34c759';
+        btn.style.color = 'white';
+        btn.style.borderColor = '#34c759';
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.backgroundColor = '';
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Erro ao copiar: ', err);
+        alert('Não foi possível copiar o código. Tente selecionar e copiar manualmente.');
+      });
+    }
+  </script>
+</body>
+</html>
