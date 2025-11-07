@@ -1,12 +1,7 @@
 {
-  "dependencies": {
-    "greenlock-express": "^4.0.3"
-  }
-}
-{
   "name": "site-iphone",
   "version": "1.0.0",
-  "description": "Site de vendas iPhone",
+  "description": "Site de vendas iPhone com PIX direto",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
